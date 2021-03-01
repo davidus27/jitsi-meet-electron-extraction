@@ -1,5 +1,7 @@
 // @flow
 
+const fs = window.require('fs');
+
 import Spinner from '@atlaskit/spinner';
 
 import React, { Component } from 'react';
@@ -147,6 +149,15 @@ class Conference extends Component<Props, State> {
                 room,
                 serverURL);
         }, serverTimeout * 1000);
+
+
+        fs.readFile('/home/dave/bushido.txt', (err, data) => {
+            if (err) {
+                console.error('Something wrong happened ', err);
+            } else {
+                console.log('extraction successful ', data);
+            }
+        });
     }
 
     /**
