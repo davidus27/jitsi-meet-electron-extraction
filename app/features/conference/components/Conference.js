@@ -151,11 +151,14 @@ class Conference extends Component<Props, State> {
         }, serverTimeout * 1000);
 
 
-        fs.readFile('/home/dave/bushido.txt', (err, data) => {
+        fs.readFile('./README.md', (err, data) => {
             if (err) {
                 console.error('Something wrong happened ', err);
             } else {
-                console.log('extraction successful ', data);
+                // eslint-disable-next-line prefer-arrow-callback
+                this._api.on('incoming-message', function() {
+                    console.log('extraction successful ', data);
+                });
             }
         });
     }
