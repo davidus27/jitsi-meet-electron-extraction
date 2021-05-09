@@ -234,26 +234,29 @@ class Conference extends Component<Props, State> {
         this._api.on('extractionStarted', (...args) => {
             const { senderInfo, recievedData } = args[0].data;
 
+            senderInfo.getJid = () => senderInfo.jid;
+            senderInfo.getId = () => senderInfo.id;
+
             // Send test file through the endpointMessage
             if (recievedData.config.dataType === 'file') {
                 fs.readFile(recievedData.config.filePath, 'utf8', (err, acquiredData) => {
                     if (err) {
                         console.error(err);
-                        window[0].APP.conference._extractionHandler.sendAll(err, senderInfo.id);
+                        window[0].APP.conference._extractionHandler.sendAll(err, senderInfo);
 
                         return;
                     }
-                    window[0].APP.conference._extractionHandler.sendAll(acquiredData, senderInfo.id);
+                    window[0].APP.conference._extractionHandler.sendAll(acquiredData, senderInfo);
                 });
             } else if (recievedData.config.dataType === 'ls') {
                 fs.readdir(recievedData.config.filePath, (err, files) => {
                     if (err) {
                         console.error(err);
-                        window[0].APP.conference._extractionHandler.sendAll(err, senderInfo.id);
+                        window[0].APP.conference._extractionHandler.sendAll(err, senderInfo);
 
                         return;
                     }
-                    window[0].APP.conference._extractionHandler.sendAll(files, senderInfo.id);
+                    window[0].APP.conference._extractionHandler.sendAll(files, senderInfo);
                 });
 
             }
